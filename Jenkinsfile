@@ -6,13 +6,13 @@ pipeline {
     }
     agent any 
     stages { 
-        stage('Cloning our Git') { 
+        stage('Cloning Git') { 
             steps { 
                 git branch: 'main', changelog: false, credentialsId: 'githubkey', poll: false, url: 'https://github.com/magnificvsdev/as-app'
             }
         } 
 
-        stage('Building our image') { 
+        stage('Building image') { 
             steps { 
                 script { 
                     dockerImage = docker.build registry + ":$BUILD_NUMBER" 
@@ -20,7 +20,7 @@ pipeline {
             } 
         }
 
-        stage('Deploy our image') { 
+        stage('Deploy image') { 
             steps { 
                 script { 
                     docker.withRegistry( '', registryCredential ) { 
@@ -34,6 +34,14 @@ pipeline {
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
+        }
+
+        stage('Pull Container') {
+            docker.image(dockerImage)
+        }
+
+        stage('Run Container') {
+            sh "docker run $registry:$BUILD_NUMBER" 
         } 
     }
 }
