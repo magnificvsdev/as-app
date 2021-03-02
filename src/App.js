@@ -3,6 +3,8 @@ import logoAS from './logo.png';
 import './App.css';
 
 function App() {
+  var today = new Date(),
+  date = today.getFullYear() + '-' + (today.getUTCMonth()+1) + '-' + today.getDate();
   return (
     <div className="App">
       <header className="App-header">
@@ -15,6 +17,9 @@ function App() {
         </p>
         <p>
         ⭐by Khaleel O'Brien⭐
+        </p>
+        <p>
+        📅{date}📅
         </p>
       </header>
     </div>
