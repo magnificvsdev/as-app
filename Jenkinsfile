@@ -39,7 +39,7 @@ pipeline {
         stage('Pull Container') {
             steps { 
                 script { 
-                    docker.image(dockerImage)
+                    docker.image("$registry:$BUILD_NUMBER").pull()
                 }
             }
         }
