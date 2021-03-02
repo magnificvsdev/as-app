@@ -37,8 +37,10 @@ pipeline {
         }
 
         stage('Pull Container') {
-            script { 
-                docker.image(dockerImage)
+            steps { 
+                script { 
+                    docker.image(dockerImage)
+                }
             }
         }
 
