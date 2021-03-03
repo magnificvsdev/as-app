@@ -7,6 +7,12 @@ pipeline {
     agent any 
     stages { 
 
+        stage('Delete Running Images') { 
+            steps { 
+                sh "docker rmi $registry:latest" 
+            }
+        } 
+
         stage('Cloning Git') { 
             steps { 
                 git branch: 'main', changelog: false, credentialsId: 'githubkey', poll: false, url: 'https://github.com/magnificvsdev/as-app'
