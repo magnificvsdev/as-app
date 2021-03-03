@@ -30,7 +30,7 @@ function App() {
           📅{date}📅
           </p>
           <p>
-          ✨Built with React✨
+          ✨Built with React Framework✨
           </p>
         </div>
       </AnimatedBg>
