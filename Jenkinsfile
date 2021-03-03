@@ -9,7 +9,7 @@ pipeline {
 
         stage('Stop All Running containers') { 
             steps { 
-                sh "docker container stop \$5(docker container ls -aq)" 
+                sh "docker container stop \$(docker container ls -aq)" 
             }
         } 
 
