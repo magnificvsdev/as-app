@@ -6,6 +6,13 @@ pipeline {
     }
     agent any 
     stages { 
+
+        stage('Delete Running Images') { 
+            steps { 
+                sh "docker rmi $registry:latest" 
+            }
+        } 
+
         stage('Cloning Git') { 
             steps { 
                 git branch: 'main', changelog: false, credentialsId: 'githubkey', poll: false, url: 'https://github.com/magnificvsdev/as-app'
@@ -15,7 +22,7 @@ pipeline {
         stage('Building image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                    dockerImage = docker.build registry + ":latest" 
                 }
             } 
         }
@@ -32,21 +39,21 @@ pipeline {
 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi $registry:$BUILD_NUMBER" 
+                sh "docker rmi $registry:latest" 
             }
         }
 
         stage('Pull Container') {
             steps { 
                 script { 
-                    docker.image("$registry:$BUILD_NUMBER").pull()
+                    docker.image("$registry:latest").pull()
                 }
             }
         }
 
         stage('Run Container') {
             steps { 
-                sh "docker run -d $registry:$BUILD_NUMBER" 
+                sh "docker run -d $registry:latest" 
             }
         } 
     }
