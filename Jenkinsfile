@@ -64,7 +64,9 @@ pipeline {
         } 
 
         stage('Email Notification'){
+            steps { 
                 mail bcc: '', body: '''Build successful!!!!''', cc: '', from: '', replyTo: '', subject: 'AchiStar Pipeline Successful', to: 'world.machinesdi@gmail.com'
+            }
         }
     }
 }
