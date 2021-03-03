@@ -7,9 +7,15 @@ pipeline {
     agent any 
     stages { 
 
-        stage('Delete Running Images') { 
+        stage('Stop All Running containers') { 
             steps { 
-                sh "docker rmi $registry:latest" 
+                sh "docker container stop $(docker container ls -aq)" 
+            }
+        } 
+
+        stage('Delete Running Image') { 
+            steps { 
+                sh "docker rmi $registry:latest --force" 
             }
         } 
 
